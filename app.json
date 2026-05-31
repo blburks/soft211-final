@@ -3,6 +3,7 @@
     "name": "soft211-final",
     "slug": "soft211-final",
     "version": "1.0.0",
+    "scheme": "weatherapp",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

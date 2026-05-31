@@ -20,7 +20,7 @@ import WeatherCard from '../components/WeatherCard';
 const OPENWEATHER_API_KEY = 'YOUR_API_KEY_HERE';
 const BACKGROUND_LOCATION_TASK = 'background-location-task';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [locationHistory, setLocationHistory] = useState([]);
@@ -179,6 +179,14 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Nearby Weather Explorer</Text>
+
+      {/* Deep link shortcut */}
+      <TouchableOpacity
+        style={styles.deepLinkBtn}
+        onPress={() => navigation.navigate('Detail', { id: 'seattle' })}
+      >
+        <Text style={styles.deepLinkBtnText}>📍 View Location Detail</Text>
+      </TouchableOpacity>
 
       {/* Offline banner */}
       {networkState && !networkState.isConnected && (
@@ -376,5 +384,17 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     padding: 20,
+  },
+  deepLinkBtn: {
+    backgroundColor: '#E8EAF6',
+    borderRadius: 8,
+    padding: 10,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  deepLinkBtnText: {
+    color: '#3949AB',
+    fontWeight: '600',
+    fontSize: 13,
   },
 });
