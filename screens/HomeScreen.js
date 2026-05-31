@@ -18,6 +18,7 @@ import * as Network from 'expo-network';
 import WeatherCard from '../components/WeatherCard';
 
 const OPENWEATHER_API_KEY = 'YOUR_API_KEY_HERE';
+const BACKGROUND_LOCATION_TASK = 'background-location-task';
 
 export default function HomeScreen() {
   const [location, setLocation] = useState(null);
@@ -95,10 +96,33 @@ export default function HomeScreen() {
           fetchWeather(newLocation.coords.latitude, newLocation.coords.longitude);
         }
       );
+
+      // Start background location updates
+      const { status: bgStatus } = await Location.requestBackgroundPermissionsAsync();
+      if (bgStatus === 'granted') {
+        const alreadyStarted = await Location.hasStartedLocationUpdatesAsync(
+          BACKGROUND_LOCATION_TASK
+        );
+        if (!alreadyStarted) {
+          await Location.startLocationUpdatesAsync(BACKGROUND_LOCATION_TASK, {
+            accuracy: Location.Accuracy.Balanced,
+            timeInterval: 30000,
+            distanceInterval: 50,
+            showsBackgroundLocationIndicator: true,
+            foregroundService: {
+              notificationTitle: 'Nearby Weather Explorer',
+              notificationBody: 'Tracking your location in the background.',
+            },
+          });
+        }
+      }
     })();
 
     return () => {
       if (watchRef.current) watchRef.current.remove();
+      Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK).then((started) => {
+        if (started) Location.stopLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
+      });
     };
   }, []);
 
