@@ -87,6 +87,8 @@ Nearby Weather Explorer is a location-aware mobile app that combines real-time G
 | `@react-navigation/native` | Screen navigation |
 | `@react-navigation/bottom-tabs` | Bottom tab bar |
 | `@react-navigation/stack` | Stack navigation for deep link screens |
+| `expo-haptics` | Vibration feedback on tracking controls and alerts |
+| `expo-speech` | Voice announcements for geofence and goal notifications |
 
 ## External API
 

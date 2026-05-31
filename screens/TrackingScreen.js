@@ -4,6 +4,7 @@ import {
   FlatList, ScrollView, Alert,
 } from 'react-native';
 import * as Location from 'expo-location';
+import * as Haptics from 'expo-haptics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { scheduleNotification, requestNotificationPermission } from '../utils/notifications';
 
@@ -47,6 +48,7 @@ export default function TrackingScreen() {
   }
 
   async function startTracking() {
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     const { status: fgStatus } = await Location.requestForegroundPermissionsAsync();
     if (fgStatus !== 'granted') {
       Alert.alert(
@@ -102,6 +104,7 @@ export default function TrackingScreen() {
   }
 
   async function pauseTracking() {
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (watchRef.current) {
       watchRef.current.remove();
       watchRef.current = null;
@@ -143,6 +146,7 @@ export default function TrackingScreen() {
   }
 
   function stopTracking() {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (watchRef.current) {
       watchRef.current.remove();
       watchRef.current = null;
