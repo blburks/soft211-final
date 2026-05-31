@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as TaskManager from 'expo-task-manager';
+import * as Location from 'expo-location';
+import HomeScreen from './screens/HomeScreen';
+
+const BACKGROUND_LOCATION_TASK = 'background-location-task';
+
+// Must be defined at module level before any component renders
+TaskManager.defineTask(BACKGROUND_LOCATION_TASK, ({ data, error }) => {
+  if (error) {
+    console.error('Background location error:', error);
+    return;
+  }
+  if (data) {
+    const { locations } = data;
+    console.log('Background location update:', locations);
+  }
+});
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <HomeScreen />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
