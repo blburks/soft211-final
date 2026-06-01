@@ -17,7 +17,7 @@ import * as Location from 'expo-location';
 import * as Network from 'expo-network';
 import WeatherCard from '../components/WeatherCard';
 
-const OPENWEATHER_API_KEY = 'YOUR_API_KEY_HERE';
+const OPENWEATHER_API_KEY = '7ce3113dbe1c03ad914a4290ab3f2c02';
 const BACKGROUND_LOCATION_TASK = 'background-location-task';
 
 export default function HomeScreen({ navigation }) {
